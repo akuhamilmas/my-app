@@ -36,16 +36,15 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // --- PROTEKSI RUTE (Skenario Soal Bagian 4) ---
-
-  // Skenario A: Belum login, mau masuk dashboard -> Tendang ke Login
+  // Skenario A: Jika pengguna belum login mencoba mengakses /dashboard, mereka harus dipaksa redirect kembali ke /login.
   if (!user && request.nextUrl.pathname.startsWith('/dashboard')) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 
-  // Skenario B: Sudah login, iseng mau ke login/register -> Tendang ke Dashboard
+  // Skenario B: Jika pengguna sudah login mencoba mengakses /login, mereka harus dipaksa redirect masuk ke /dashboard.
+
   if (user && (request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/register'))) {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard'
