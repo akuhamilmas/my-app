@@ -26,7 +26,7 @@ export default async function DashboardPage() {
           </form>
         </div>
 
-        <h2 className="text-xl font-semibold mb-4">Pengumuman Kantor</h2>
+        <h2 className="text-xl font-bold text-black mb-4">Pengumuman Kantor</h2>
         <div className="grid gap-4">
           {announcements?.map((item) => (
             <div key={item.id} className="border p-4 rounded hover:bg-gray-50">
